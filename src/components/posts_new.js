@@ -34,8 +34,8 @@ class PostsNew extends Component {
 						component={this.renderField}
 					/>
 					<Field
-						label="Tags"
-						name="tags"
+						label="Categories"
+						name="categories"
 						component={this.renderField}
 					/>
 					<Field
@@ -49,6 +49,23 @@ class PostsNew extends Component {
 	}
 }
 
+function validate (values) {
+	const errors = {};
+
+	if (!values.title) {
+		errors.title = 'Error in title!';
+	}
+	if (!values.categories) {
+		errors.categories = 'Error in categories!';
+	}
+	if (!values.content) {
+		errors.content = 'Error in content!';
+	}
+
+	return errors;
+}
+
 export default reduxForm({
+	validate, // Defines the validation function
 	form: 'PostsNewForm' // Identifies the form
 })(PostsNew);

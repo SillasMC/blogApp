@@ -10,6 +10,7 @@ class PostsNew extends Component {
 					className="form-control"
 					{...field.input} // Wire the event handlers of Field to input
 				/>
+				{field.meta.error}
 			</div>
 		);
 	}
@@ -19,15 +20,23 @@ class PostsNew extends Component {
 			<div className="form-group">
 				<label>{field.label}</label>
 				<textarea className="form-control" rows="6" {...field.input}></textarea>
+				{field.meta.error}
 			</div>
 		);
 	}
 
+	// Contain the action that will be aplied to form values if they are valid
+	onSubmit (values) {
+		console.log(values);
+	}
+
 	render () {
+	const { handleSubmit } = this.props;
+
 		return (
 			<div>
 				<h2>Posts New</h2>
-				<form>
+				<form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
 					<Field
 						label="Title"
 						name="title"
@@ -43,6 +52,8 @@ class PostsNew extends Component {
 						name="content"
 						component={this.renderTextAreaField}
 					/>
+					<button type="submit" className="btn btn-primary">Save</button>
+					{/* <button className="btn btn-danger">Cancel</button> */}
 				</form>
 			</div>
 		);

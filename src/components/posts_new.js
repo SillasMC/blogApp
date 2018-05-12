@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {  Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { createPost } from '../actions';
 
 class PostsNew extends Component {
 	renderField (field) {
@@ -38,7 +41,9 @@ class PostsNew extends Component {
 
 	// Contain the action that will be aplied to form values if they are valid
 	onSubmit (values) {
-		console.log(values);
+		this.props.createPost(values, () => {
+			this.props.history.push('/'); // Router helper that navigates to /
+		});
 	}
 
 	render () {
@@ -90,4 +95,6 @@ function validate (values) {
 export default reduxForm({
 	validate, // Defines the validation function
 	form: 'PostsNewForm' // Identifies the form
-})(PostsNew);
+})(
+	connect(null, {createPost})(PostsNew)
+);
